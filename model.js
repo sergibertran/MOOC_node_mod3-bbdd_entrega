@@ -6,6 +6,7 @@ const sequelize = new Sequelize("sqlite:db.sqlite", options);
 
 class User extends Model {}
 class Quiz extends Model {}
+class Scores extends Mode {}
 
 User.init(
   { name: {
