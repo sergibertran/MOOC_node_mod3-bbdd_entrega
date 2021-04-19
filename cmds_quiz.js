@@ -39,13 +39,37 @@ exports.create = async (rl) => {
 }
 
 // Test (play) quiz identified by <id>
-exports.test = async (rl) => {
+exports.play = async (rl) => {
 
-  let id = await rl.questionP("Enter quiz Id");
-  let quiz = await Quiz.findByPk(Number(id));
+  var quizzesArray= [];
+
+
+  let quizzes = await Quiz.findAll(
+    { include: [{
+        model: User,
+        as: 'author'
+      }]
+    }
+  );
+ 
+  quizzes.forEach( 
+ 
+    q => 
+    quizzesArray.push(q.question),    
+    
+  );
+  var nRandom= Math.floor(Math.random() * (quizzesArray.length - 0)) + 0;
+  
+
+
+
+  let quiz = await Quiz.findByPk(nRandom);
   if (!quiz) throw new Error(`  Quiz '${id}' is not in DB`);
 
+
   let answered = await rl.questionP(quiz.question);
+
+
 
   if (answered.toLowerCase().trim()===quiz.answer.toLowerCase().trim()) {
     rl.log(`  The answer "${answered}" is right!`);
@@ -53,6 +77,10 @@ exports.test = async (rl) => {
     rl.log(`  The answer "${answered}" is wrong!`);
   }
 }
+
+
+
+
 
 // Update quiz (identified by <id>) in the DB
 exports.update = async (rl) => {

@@ -5,7 +5,7 @@ exports.help = (rl) =>
   rl.log(
     `  Commands (params are requested after):
     > h              ## show help
-    >
+    > play           ## user: start game
     > lu | ul | u    ## users: list all
     > cu | uc        ## user: create
     > ru | ur | r    ## user: read (show age)
